@@ -19,3 +19,43 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
+import Synth from "./audiosynth"
+
+const piano = Synth.createInstrument('fat');
+piano.play('C', 3, 2); // plays C4 for 2s using the 'piano' sound profile
+
+const oct2 = "ZSXDCVGBHNJM,L.;/";
+const oct3 = "Q2W3ER5T6Y7UI9O0P[=]";
+const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+
+// maps keys to {note, octave}
+let keymap = {};
+let octave = 3;
+for(let oct of [oct2, oct3]) {
+	for(let i = 0; i != oct.length; i++) {
+		const char = oct[i];
+		keymap[char] = {
+			note: notes[i % notes.length],
+			octave: octave + parseInt(i / notes.length)
+		};
+	};
+	octave++;
+}
+
+const hasModifier = e => e.altKey || e.shiftKey || e.ctrlKey || e.metaKey;
+
+document.addEventListener('keydown', function(e){
+  	if(hasModifier(e)) {
+  		return;
+  	}
+
+	const note = keymap[e.key.toUpperCase()];
+	if(note) {
+    	piano.play(note.note, note.octave, 2);
+  		e.preventDefault(); e.stopPropagation();
+	}
+});
+
+document.addEventListener('keypress', function (e) {
+    
+});

@@ -22,7 +22,11 @@ import socket from "./socket"
 import Synth from "./audiosynth"
 
 const piano = Synth.createInstrument('fat');
-piano.play('C', 3, 2); // plays C4 for 2s using the 'piano' sound profile
+
+function play(note) {
+	piano.play(note.note, note.octave, 2);
+	document.getElementById("credits").classList.add("visible");
+}
 
 const oct2 = "ZSXDCVGBHNJM,L.;/";
 const oct3 = "Q2W3ER5T6Y7UI9O0P[=]";
@@ -51,11 +55,9 @@ document.addEventListener('keydown', function(e){
 
 	const note = keymap[e.key.toUpperCase()];
 	if(note) {
-    	piano.play(note.note, note.octave, 2);
+    	play(note, note, 2);
+
+    	// suppress browser defaults
   		e.preventDefault(); e.stopPropagation();
 	}
-});
-
-document.addEventListener('keypress', function (e) {
-    
 });

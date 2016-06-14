@@ -76,3 +76,10 @@ form.link, form.button {
     border-bottom: 0;
   }
 }
+
+#credits {
+	display: none;
+}
+#credits.visible {
+	display: block;
+}

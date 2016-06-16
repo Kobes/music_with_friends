@@ -34,4 +34,8 @@ defmodule Music.Play do
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil
+
+  def play(notes) do
+    Music.Endpoint.broadcast! "play:sounds", "play", %{notes: notes}
+  end
 end

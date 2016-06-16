@@ -256,7 +256,7 @@ Synth.loadSoundProfile({
 	name: 'fat',
 	attack: function() { return 0.002; },
 	dampen: function(sampleRate, frequency, volume) {
-		return Math.pow(0.5*Math.log((frequency*volume)/sampleRate),2);
+		return Math.pow(0.45*Math.log((frequency*volume)/sampleRate),2);
 	},
 	simpleWave: function(i, sampleRate, frequency, volume) {
 		var base = this.modulate[0];

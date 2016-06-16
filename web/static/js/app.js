@@ -18,14 +18,27 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-import socket from "./socket"
+import connect from "./socket"
 import Synth from "./audiosynth"
 
-const piano = Synth.createInstrument('fat');
+const synth = Synth.createInstrument('fat');
+// const piano = Synth.createInstrument('piano');
+const guitar = Synth.createInstrument('acoustic');
 
+const instruments = {guitar, synth};
 function play(note) {
-	piano.play(note.note, note.octave, 2);
+	const instrument = instruments[note.instrument];
+	if(!instrument) {
+		throw new Error(`No instrument given. One of ${Object.keys(instruments)}, please`);
+	}
+	if(!note.note || !note.octave) {
+		throw new Error(`No note or octave given.`);
+	}
+
+	instrument.play(note.note, note.octave, 2);
 	document.getElementById("credits").classList.add("visible");
+
+	console.log(`%{note: "${note.note}", octave: ${note.octave}, instrument: "${note.instrument}"}`);
 }
 
 const oct2 = "ZSXDCVGBHNJM,L.;/";
@@ -35,15 +48,18 @@ const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 // maps keys to {note, octave}
 let keymap = {};
 let octave = 3;
+let instrument = "synth";
 for(let oct of [oct2, oct3]) {
 	for(let i = 0; i != oct.length; i++) {
 		const char = oct[i];
 		keymap[char] = {
 			note: notes[i % notes.length],
-			octave: octave + parseInt(i / notes.length)
+			octave: octave + parseInt(i / notes.length),
+			instrument
 		};
 	};
 	octave++;
+	instrument = "guitar";
 }
 
 const hasModifier = e => e.altKey || e.shiftKey || e.ctrlKey || e.metaKey;
@@ -61,3 +77,9 @@ document.addEventListener('keydown', function(e){
   		e.preventDefault(); e.stopPropagation();
 	}
 });
+
+function onPlay(notes) {
+	notes.forEach(play);
+}
+
+connect(onPlay);

@@ -28,7 +28,7 @@ defmodule Music do
     :ok
   end
 
-  def play(sounds) do
-    Music.Endpoint.broadcast! "play:sounds", "play", sounds
+  def play(notes) do
+    Music.Play.play(notes)
   end
 end

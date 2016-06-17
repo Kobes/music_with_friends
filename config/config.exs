@@ -12,7 +12,8 @@ config :music, Music.Endpoint,
   secret_key_base: "FdMBhVYb+CSBiNEPq7h3IBq32kFSrRrgIlXVU5BzMa/1NwzaewaqWZJL49ZXhGpv",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Music.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  server: true
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -26,4 +27,5 @@ import_config "#{Mix.env}.exs"
 # Configure phoenix generators
 config :phoenix, :generators,
   migration: true,
-  binary_id: false
+  binary_id: false,
+  server: true

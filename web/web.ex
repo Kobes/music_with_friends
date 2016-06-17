@@ -16,23 +16,9 @@ defmodule Music.Web do
   below.
   """
 
-  def model do
-    quote do
-      use Ecto.Schema
-
-      import Ecto
-      import Ecto.Changeset
-      import Ecto.Query, only: [from: 1, from: 2]
-    end
-  end
-
   def controller do
     quote do
       use Phoenix.Controller
-
-      alias Music.Repo
-      import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
 
       import Music.Router.Helpers
       import Music.Gettext
@@ -65,9 +51,6 @@ defmodule Music.Web do
     quote do
       use Phoenix.Channel
 
-      alias Music.Repo
-      import Ecto
-      import Ecto.Query, only: [from: 1, from: 2]
       import Music.Gettext
     end
   end

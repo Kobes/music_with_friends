@@ -9,8 +9,6 @@ defmodule Music do
     children = [
       # Start the endpoint when the application starts
       supervisor(Music.Endpoint, []),
-      # Start the Ecto repository
-      supervisor(Music.Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(Music.Worker, [arg1, arg2, arg3]),
     ]
